@@ -1,0 +1,66 @@
+# Svelte with Routify and Tailwind CSS Template
+
+This is a starter template for building Svelte applications with Routify v3 and Tailwind CSS.
+
+## Installation
+
+To get started, clone this repository:
+
+```
+git clone https://github.com/osmancoskun/routify3-tailwind.git
+```
+
+Then, navigate into the directory and install the dependencies:
+
+```
+cd routify3-tailwind
+npm install
+```
+
+## Usage
+
+To start a development server, run the following command:
+
+```
+npm run dev
+```
+
+This will start a development server on `http://localhost:1337` that will automatically reload when you make changes to your code.
+
+To build your application for production, run:
+
+```
+npm run build
+```
+
+This will create a production-ready build of your application in the `dist` directory.
+
+## Features
+
+This template includes the following features:
+
+- Svelte
+- Routify v3
+- Tailwind CSS
+- PostCSS with Autoprefixer
+
+## Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+This project is licensed under the MIT License.
+
+## Acknowledgments
+
+- [Routify](https://routify.dev/)
+- [Svelte](https://svelte.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [PostCSS](https://postcss.org/)
+
+## Credits
+
+This template was created by Your Name. Special thanks to Your Name for their contributions.
+
+If you have any questions or feedback, please feel free to contact me at your-email@example.com.

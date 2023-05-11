@@ -36,7 +36,7 @@ jobs:
       - run: ls -la
       - run: npm i
       - run: npm run build
-      - run: cd ./dist/client
+      - run: cd dist/client
       - run: ls -la
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1

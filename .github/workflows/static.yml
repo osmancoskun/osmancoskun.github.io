@@ -29,15 +29,19 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - run: ls -la
-      - run: npm i
-      - run: npm run build
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v3
+      - run: ls -la
+      - run: npm i
+      - run: npm run build
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
+        
+
+        
         with:
           # Upload entire repository
           path: './dist/client'

@@ -36,6 +36,7 @@ jobs:
       - run: ls -la
       - run: npm i
       - run: npm run build
+      - run: cd ./dist/client
       - run: ls -la
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
@@ -45,3 +46,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+      

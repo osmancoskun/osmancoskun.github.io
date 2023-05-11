@@ -36,12 +36,9 @@ jobs:
       - run: ls -la
       - run: npm i
       - run: npm run build
-
+      - run: ls -la
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
-        
-
-        
         with:
           # Upload entire repository
           path: './dist/client'

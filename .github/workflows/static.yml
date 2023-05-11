@@ -29,7 +29,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - run: cd ..
+      - run: sudo apt update
+      - run: sudo apt upgrade
+      - run: sudo apt install npm
+      - run: sudo apt install nodejs
       - run: npm i
       - run: npm run build
       - name: Checkout

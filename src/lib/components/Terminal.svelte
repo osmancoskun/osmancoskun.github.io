@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import { fetchRepos, getStars } from '$lib/github';
 
 	let history = $state<Array<{ type: 'input' | 'output'; text: string }>>([]);
 	let currentInput = $state('');
@@ -32,7 +33,7 @@
 
        \x1b[red]●\x1b[yellow]●\x1b[green]●\x1b[cyan]●\x1b[accent]●\x1b[magenta]●\x1b[reset]`;
 
-	const files: Record<string, string> = {
+	const files: Record<string, string | (() => string)> = {
 		'about.txt': `Hi, I'm Osman Coskun.
 
 Originally from Famagusta, Northern Cyprus.
@@ -73,7 +74,41 @@ are the way.`,
 drwxr-xr-x  pardus-apps/
 drwxr-xr-x  web-projects/
 drwxr-xr-x  freelance/
--rw-r--r--  README.md`,
+-rw-r--r--  README.md
+
+Try: cat projects/pardus-gnome-greeter
+     cat projects/pardus-nvidia-installer
+     cat projects/pardus-gnome-shortcuts`,
+
+		'projects/pardus-gnome-greeter': () => `pardus-gnome-greeter
+━━━━━━━━━━━━━━━━━━━━
+A login/greeter screen for GNOME on Pardus.
+Built with Python and GTK, handles user authentication
+and session selection for the Pardus desktop.
+
+Language:  Python (GTK)
+Stars:     ${getStars('pardus-gnome-greeter')}
+Repo:      github.com/pardus/pardus-gnome-greeter`,
+
+		'projects/pardus-nvidia-installer': () => `pardus-nvidia-installer
+━━━━━━━━━━━━━━━━━━━━━━
+NVIDIA driver installer for Pardus GNU/Linux.
+Simplifies the painful process of getting NVIDIA
+drivers working on Debian-based systems.
+
+Language:  Python
+Stars:     ${getStars('pardus-nvidia-installer')}
+Repo:      github.com/pardus/pardus-nvidia-installer`,
+
+		'projects/pardus-gnome-shortcuts': () => `pardus-gnome-shortcuts
+━━━━━━━━━━━━━━━━━━━━━━
+GNOME keyboard shortcut manager for Pardus.
+A GUI tool to view, edit, and manage keyboard
+shortcuts in the GNOME desktop environment.
+
+Language:  Python (GTK)
+Stars:     ${getStars('pardus-gnome-shortcuts')}
+Repo:      github.com/pardus/pardus-gnome-shortcuts`,
 
 		'skills.txt': `Languages:  Python, JavaScript, TypeScript, Shell Script, GJS
 Backend:    Flask, FastAPI, Quart, Node.js, Express
@@ -88,6 +123,12 @@ GitHub:   github.com/osmancoskun
 LinkedIn: linkedin.com/in/osmancoskun95
 Web:      osmancoskun.com`,
 	};
+
+	function getFile(name: string): string | undefined {
+		const f = files[name];
+		if (f === undefined) return undefined;
+		return typeof f === 'function' ? f() : f;
+	}
 
 	function parseAnsi(text: string): string {
 		return text
@@ -153,7 +194,7 @@ drwxr-xr-x  4 osman osman 4096 Mar 23 09:42 projects/
 				return 'about.txt  contact.txt  experience.txt  projects/  skills.txt';
 			case 'cat':
 				if (args.length === 0) return 'cat: missing operand';
-				if (files[args[0]]) return files[args[0]];
+				if (getFile(args[0])) return getFile(args[0])!;
 				return `cat: ${args[0]}: No such file or directory`;
 			case 'echo':
 				return args.join(' ');
@@ -179,12 +220,12 @@ SWAYSOCK=/run/user/1000/sway-ipc.sock`;
 					.join('\n') || '  1  history';
 			case 'head':
 				if (args.length === 0) return 'head: missing operand';
-				if (files[args[0]]) return files[args[0]].split('\n').slice(0, 10).join('\n');
+				if (getFile(args[0])) return getFile(args[0])!.split('\n').slice(0, 10).join('\n');
 				return `head: ${args[0]}: No such file or directory`;
 			case 'wc':
 				if (args.length === 0) return 'wc: missing operand';
-				if (files[args[0]]) {
-					const content = files[args[0]];
+				if (getFile(args[0])) {
+					const content = getFile(args[0])!;
 					const lines = content.split('\n').length;
 					const words = content.split(/\s+/).length;
 					const chars = content.length;
@@ -193,7 +234,7 @@ SWAYSOCK=/run/user/1000/sway-ipc.sock`;
 				return `wc: ${args[0]}: No such file or directory`;
 			case 'file':
 				if (args.length === 0) return 'file: missing operand';
-				if (files[args[0]]) return `${args[0]}: UTF-8 Unicode text`;
+				if (getFile(args[0])) return `${args[0]}: UTF-8 Unicode text`;
 				return `${args[0]}: cannot open`;
 			case 'tree':
 				return `.
@@ -294,8 +335,8 @@ Date:   ${new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'sho
 				return `No manual entry for ${args[0]}\nThis is a portfolio. Type 'help'.`;
 			case 'grep':
 				if (args.length < 2) return 'usage: grep <pattern> <file>';
-				if (files[args[1]]) {
-					const matches = files[args[1]].split('\n').filter(l => l.toLowerCase().includes(args[0].toLowerCase()));
+				if (getFile(args[1])) {
+					const matches = getFile(args[1])!.split('\n').filter(l => l.toLowerCase().includes(args[0].toLowerCase()));
 					return matches.length > 0 ? matches.join('\n') : `(no matches)`;
 				}
 				return `grep: ${args[1]}: No such file or directory`;
@@ -338,6 +379,7 @@ Date:   ${new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'sho
 	}
 
 	onMount(() => {
+		fetchRepos();
 		history.push({ type: 'output', text: neofetch });
 		focusInput();
 	});

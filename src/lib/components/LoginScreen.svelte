@@ -134,7 +134,7 @@
 
 		<!-- Time -->
 		<div class="mt-6 text-[var(--color-fg-dim)] text-xs">
-			Mon Mar 23 09:42 — tty1
+			{new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })} — tty1
 		</div>
 	{/if}
 

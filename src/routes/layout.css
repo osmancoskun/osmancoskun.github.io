@@ -1,1 +1,29 @@
 @import 'tailwindcss';
+
+@theme {
+	--font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+	--color-bg: #1a1b26;
+	--color-fg: #c0caf5;
+	--color-fg-dim: #565f89;
+	--color-accent: #7aa2f7;
+	--color-green: #9ece6a;
+	--color-red: #f7768e;
+	--color-yellow: #e0af68;
+	--color-cyan: #7dcfff;
+	--color-magenta: #bb9af7;
+	--color-bar-bg: #16161e;
+	--color-bar-fg: #a9b1d6;
+	--color-surface: #24283b;
+	--color-border: #3b4261;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: var(--color-bg);
+	color: var(--color-fg);
+	font-family: var(--font-mono);
+}

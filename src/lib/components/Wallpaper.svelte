@@ -1,12 +1,9 @@
 <script lang="ts">
 	const shortcuts = [
-		{ keys: 'Super + Enter', action: 'Terminal' },
-		{ keys: 'Super + D', action: 'Launcher' },
-		{ keys: 'Super + 1-5', action: 'Workspace' },
-		{ keys: 'Super + Q', action: 'Close window' },
-		{ keys: 'Super + F', action: 'Fullscreen' },
-		{ keys: 'Super + H/V', action: 'Split H/V' },
-		{ keys: 'Super + Shift + E', action: 'Exit sway' },
+		{ keys: 'Alt + Enter', action: 'Terminal' },
+		{ keys: 'Alt + D', action: 'Launcher' },
+		{ keys: 'Esc, then 1-5', action: 'Workspace' },
+		{ keys: 'Alt + Q', action: 'Close window' },
 	];
 </script>
 

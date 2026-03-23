@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	let { activeWorkspace, onWorkspaceChange }: {
+		activeWorkspace: number;
+		onWorkspaceChange: (n: number) => void;
+	} = $props();
+
 	let time = $state('');
 	let date = $state('');
 	let mem = $state(0);
@@ -8,8 +13,6 @@
 	let bat = $state(100);
 	let netUp = $state(0);
 	let netDown = $state(0);
-
-	let activeWorkspace = $state(1);
 
 	function rand(min: number, max: number): number {
 		return Math.round((Math.random() * (max - min) + min) * 10) / 10;
@@ -32,10 +35,6 @@
 		const interval = setInterval(updateStats, 1000);
 		return () => clearInterval(interval);
 	});
-
-	export function setWorkspace(n: number) {
-		activeWorkspace = n;
-	}
 </script>
 
 <div class="h-8 bg-[var(--color-bar-bg)] border-b border-[var(--color-border)] flex items-center justify-between px-2 font-mono text-xs text-[var(--color-bar-fg)] select-none shrink-0">
@@ -46,7 +45,7 @@
 				class="px-2.5 py-1 rounded-sm transition-colors {ws === activeWorkspace
 					? 'bg-[var(--color-accent)] text-[var(--color-bar-bg)] font-bold'
 					: 'hover:bg-[var(--color-surface)]'}"
-				onclick={() => activeWorkspace = ws}
+				onclick={() => onWorkspaceChange(ws)}
 			>
 				{ws}
 			</button>

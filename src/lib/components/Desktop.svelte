@@ -66,6 +66,9 @@
 
 	onMount(() => {
 		function handleKeydown(e: KeyboardEvent) {
+			if (e.altKey) {
+				e.preventDefault();
+			}
 			if (e.altKey && e.key === 'Enter') {
 				e.preventDefault();
 				openTerminal();

@@ -93,14 +93,12 @@
 				}
 			}
 
-			// Workspace switching: plain 1-5 when not in input, or Escape to unfocus
+			// Workspace switching: Alt+1-5
 			const num = parseInt(e.key);
-			if (num >= 1 && num <= 5 && !e.ctrlKey && !e.metaKey) {
-				if (!isTerminalFocused() || e.altKey) {
-					e.preventDefault();
-					activeWorkspace = num;
-					focusActiveWorkspace();
-				}
+			if (e.altKey && num >= 1 && num <= 5) {
+				e.preventDefault();
+				activeWorkspace = num;
+				focusActiveWorkspace();
 			}
 
 			if (e.key === 'Escape' && isTerminalFocused()) {

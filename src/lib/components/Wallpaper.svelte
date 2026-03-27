@@ -17,7 +17,7 @@
 	const shortcuts = [
 		{ keys: 'Alt + Enter', action: 'Terminal' },
 		{ keys: 'Alt + D', action: 'Launcher' },
-		{ keys: 'Esc, then 1-5', action: 'Workspace' },
+		{ keys: 'Alt + 1-5', action: 'Workspace' },
 		{ keys: 'Alt + P', action: 'Projects' },
 		{ keys: 'Alt + H/L', action: 'Focus left/right' },
 		{ keys: 'Alt + Q', action: 'Close window' },

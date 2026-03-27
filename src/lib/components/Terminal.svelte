@@ -11,7 +11,7 @@
 
 	const neofetch = `\x1b[cyan]       osman@osmancoskun\x1b[reset]
        ─────────────────
-\x1b[cyan]  ●    \x1b[reset]OS: Pardus/Debian GNU/Linux 13
+\x1b[cyan]  ●    \x1b[reset]OS: Pardus 25 Gnu/Linux
 \x1b[cyan] ● ●   \x1b[reset]Host: osmancoskun.com
 \x1b[cyan]● ● ●  \x1b[reset]Kernel: 6.12.0-portfolio
 \x1b[cyan] ● ●   \x1b[reset]Uptime: since April 23, 1995

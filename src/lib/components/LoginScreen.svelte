@@ -61,10 +61,15 @@
 			onComplete();
 		};
 
-		window.addEventListener('click', handleSkip);
-		window.addEventListener('keydown', handleSkip);
+		// Delay attaching skip listeners so the event that triggered
+		// the previous screen's transition doesn't immediately skip this one
+		const skipTimeout = setTimeout(() => {
+			window.addEventListener('click', handleSkip);
+			window.addEventListener('keydown', handleSkip);
+		}, 100);
 
 		return () => {
+			clearTimeout(skipTimeout);
 			if (activeInterval) clearInterval(activeInterval);
 			window.removeEventListener('click', handleSkip);
 			window.removeEventListener('keydown', handleSkip);
@@ -89,7 +94,7 @@
 			<div class="px-6 py-8 space-y-6">
 				<!-- Greeting -->
 				<div class="text-center space-y-1">
-					<div class="text-[var(--color-fg-dim)]">Pardus/Debian GNU/Linux 13 (trixie) on tty1</div>
+					<div class="text-[var(--color-fg-dim)]">Pardus 25 Gnu/Linux on tty1</div>
 				</div>
 
 				<!-- Username -->
@@ -102,26 +107,22 @@
 				</div>
 
 				<!-- Password -->
-				{#if showPasswordField}
-					<div class="space-y-1">
-						<label class="text-[var(--color-fg-dim)] text-xs uppercase tracking-wider">Password</label>
-						<div class="border border-[var(--color-border)] {phase === 'typing-pass' ? 'border-[var(--color-accent)]' : ''} rounded-sm px-3 py-1.5 flex items-center min-h-[2rem]">
-							<span class="text-[var(--color-fg)]">{typedPassword}</span>
-							<span class="animate-pulse text-[var(--color-accent)] {cursorVisible(phase, 'typing-pass')}">|</span>
-						</div>
+				<div class="space-y-1">
+					<label class="text-[var(--color-fg-dim)] text-xs uppercase tracking-wider">Password</label>
+					<div class="border border-[var(--color-border)] {phase === 'typing-pass' ? 'border-[var(--color-accent)]' : ''} rounded-sm px-3 py-1.5 flex items-center min-h-[2rem]">
+						<span class="text-[var(--color-fg)]">{typedPassword}</span>
+						<span class="animate-pulse text-[var(--color-accent)] {cursorVisible(phase, 'typing-pass')}">|</span>
 					</div>
-				{/if}
+				</div>
 
 				<!-- Login status -->
-				{#if loggingIn}
-					<div class="text-center">
-						{#if phase === 'done'}
-							<span class="text-[var(--color-green)]">Welcome back, {username}. Starting sway...</span>
-						{:else}
-							<span class="text-[var(--color-fg-dim)]">Authenticating...</span>
-						{/if}
-					</div>
-				{/if}
+				<div class="text-center min-h-[1.5rem]">
+					{#if phase === 'done'}
+						<span class="text-[var(--color-green)]">Welcome back, {username}. Starting sway...</span>
+					{:else if loggingIn}
+						<span class="text-[var(--color-fg-dim)]">Authenticating...</span>
+					{/if}
+				</div>
 			</div>
 
 			<!-- Footer -->

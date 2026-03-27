@@ -74,10 +74,13 @@
 			onComplete();
 		};
 
-		window.addEventListener('click', handleSkip);
-		window.addEventListener('keydown', handleSkip);
+		const skipTimeout = setTimeout(() => {
+			window.addEventListener('click', handleSkip);
+			window.addEventListener('keydown', handleSkip);
+		}, 100);
 
 		return () => {
+			clearTimeout(skipTimeout);
 			skipped = true;
 			window.removeEventListener('click', handleSkip);
 			window.removeEventListener('keydown', handleSkip);
@@ -85,9 +88,9 @@
 	});
 </script>
 
-<div class="fixed inset-0 bg-black text-white font-mono text-sm p-8 overflow-hidden select-none">
+<div class="systemd-enter fixed inset-0 bg-black text-white font-mono text-sm p-8 overflow-hidden select-none">
 	<div class="mb-4 text-[var(--color-fg-dim)]">
-		Pardus/Debian GNU/Linux 13 (trixie) — Linux 6.12.0-osman
+		Pardus 25 Gnu/Linux — Linux 6.12.0-osman
 	</div>
 
 	<div class="space-y-0.5">
@@ -111,3 +114,30 @@
 		Click or press any key to skip
 	</div>
 </div>
+
+<style>
+	.systemd-enter {
+		animation: crt-on 0.4s ease-out;
+	}
+
+	@keyframes crt-on {
+		0% {
+			opacity: 0;
+			filter: brightness(30);
+			transform: scaleY(0.005);
+		}
+		40% {
+			opacity: 1;
+			filter: brightness(5);
+			transform: scaleY(0.005);
+		}
+		70% {
+			filter: brightness(2);
+			transform: scaleY(1.1);
+		}
+		100% {
+			filter: brightness(1);
+			transform: scaleY(1);
+		}
+	}
+</style>
